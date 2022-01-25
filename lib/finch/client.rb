@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'finch/client/version'
+require 'finch/client/connect'
 require 'finch/client/configuration'
 
 module Finch
