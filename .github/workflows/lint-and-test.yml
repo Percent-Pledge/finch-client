@@ -27,5 +27,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
 
+      - name: Setup Gem
+        run: bin/setup
+
       - name: Run tests
         run: bundle exec rspec
