@@ -9,6 +9,24 @@ on:
   workflow_dispatch:
 
 jobs:
+  run-linting:
+    runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    name: Run linting checks
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7.5"
+          bundler-cache: true
+
+      - name: Run Ruby linting via Rubocop
+        run: bundle exec rubocop
+
   run-tests:
     runs-on: ubuntu-latest
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
