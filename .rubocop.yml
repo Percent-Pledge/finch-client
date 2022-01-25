@@ -1,0 +1,5 @@
+require: rubocop-rspec
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
