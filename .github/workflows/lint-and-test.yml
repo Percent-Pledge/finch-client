@@ -1,0 +1,31 @@
+name: Perform linting and run tests
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
+    strategy:
+      matrix:
+        ruby: ["2.5", "2.6", "2.7"]
+
+    name: Run tests on Ruby ${{ matrix.ruby }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+
+      - name: Run tests
+        run: bundle exec rspec
