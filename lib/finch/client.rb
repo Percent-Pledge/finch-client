@@ -1,4 +1,6 @@
-require "finch/client/version"
+# frozen_string_literal: true
+
+require 'finch/client/version'
 
 module Finch
   module Client
