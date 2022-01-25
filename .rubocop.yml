@@ -3,3 +3,10 @@ require: rubocop-rspec
 AllCops:
   SuggestExtensions: false
   NewCops: enable
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/**.*"
+
+Style/Documentation:
+  Enabled: false
