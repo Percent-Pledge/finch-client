@@ -48,7 +48,7 @@ PLATFORMS
   aarch64-linux
 
 DEPENDENCIES
-  bundler (~> 2.2)
+  bundler (~> 2.0)
   finch-client!
   rake (~> 10.0)
   rspec (~> 3.0)
