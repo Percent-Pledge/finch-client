@@ -24,7 +24,7 @@ module Finch
           response = do_request_access_token(code, redirect_uri)
 
           if response.success?
-            response.parsed_response
+            response.parsed_response['access_token']
           else
             raise AccessTokenError, response.parsed_response['message']
           end

@@ -42,8 +42,16 @@ RSpec.describe Finch::Client::Connect do
       # Will automatically fail if the request doesn't matched the stubbed response
       stub_request(:post, 'https://api.tryfinch.com/auth/token')
         .with(basic_auth: [Finch::Client.configuration.client_id, Finch::Client.configuration.client_secret])
+        .to_return(headers: { content_type: 'application/json' }, body: { access_token: '' }.to_json)
 
       described_class.request_access_token('12345', 'example.com')
+    end
+
+    it 'returns the access token' do
+      stub_request(:post, 'https://api.tryfinch.com/auth/token')
+        .to_return(headers: { content_type: 'application/json' }, body: { access_token: 'abcdef' }.to_json)
+
+      expect(described_class.request_access_token('12345', 'example.com')).to eq('abcdef')
     end
 
     it 'throws if request was unsuccessful' do
