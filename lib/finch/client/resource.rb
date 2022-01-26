@@ -5,6 +5,10 @@ module Finch
     class Resource
       attr_reader :data
 
+      def self.from_array(array)
+        array.map { |item| new(item) }
+      end
+
       def initialize(data)
         @data = recursively_create_resources(data)
       end

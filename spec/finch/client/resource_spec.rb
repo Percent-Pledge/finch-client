@@ -9,6 +9,16 @@ RSpec.describe Finch::Client::Resource do
     end
   end
 
+  describe '.from_array' do
+    it 'returns an array of resources' do
+      data = [{ 'name' => 'Finch' }]
+      resources = described_class.from_array(data)
+
+      expect(resources).to be_a(Array)
+      expect(resources.first).to be_a(described_class)
+    end
+  end
+
   describe '#initialize' do
     it 'deep-transforms data attribute keys to symbols' do
       data = { 'name' => 'Finch', 'nested' => { 'id' => 1 } }
@@ -26,11 +36,12 @@ RSpec.describe Finch::Client::Resource do
     end
 
     it 'creates nested resources for arrays' do
-      data = { 'nested' => [{ 'id' => 1 }] }
+      data = { 'nested' => [{ 'id' => 1 }, 'asdf'] }
       resource = described_class.new(data)
 
       expect(resource.nested).to be_a(Array)
       expect(resource.nested.first).to be_a(described_class)
+      expect(resource.nested.last).to be_a(String)
     end
   end
 

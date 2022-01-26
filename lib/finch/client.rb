@@ -5,6 +5,7 @@ require 'finch/client/version'
 require 'finch/client/connect'
 require 'finch/client/resource'
 require 'finch/client/configuration'
+require 'finch/client/paged_resource_collection'
 
 module Finch
   module Client
