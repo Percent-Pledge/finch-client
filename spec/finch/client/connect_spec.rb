@@ -36,4 +36,10 @@ RSpec.describe Finch::Client::Connect do
       expect(uri.query).to include('scope=read')
     end
   end
+
+  describe '#request_access_token' do
+    it 'tests' do
+      described_class.request_access_token('123', 'example.com')
+    end
+  end
 end
