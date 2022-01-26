@@ -38,8 +38,25 @@ RSpec.describe Finch::Client::Connect do
   end
 
   describe '#request_access_token' do
-    it 'tests' do
-      described_class.request_access_token('123', 'example.com')
+    it 'includes basic auth header' do
+      # Will automatically fail if the request doesn't matched the stubbed response
+      stub_request(:post, 'https://api.tryfinch.com/auth/token')
+        .with(basic_auth: [Finch::Client.configuration.client_id, Finch::Client.configuration.client_secret])
+
+      described_class.request_access_token('12345', 'example.com')
+    end
+
+    it 'throws if request was unsuccessful' do
+      stub_request(:post, 'https://api.tryfinch.com/auth/token')
+        .to_return(
+          status: 401,
+          headers: { content_type: 'application/json' },
+          body: { message: 'Invalid code' }.to_json
+        )
+
+      expect do
+        described_class.request_access_token('12345', 'example.com')
+      end.to raise_error(Finch::Client::Connect::AccessTokenError, 'Invalid code')
     end
   end
 end
