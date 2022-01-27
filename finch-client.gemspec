@@ -10,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors = ['Kieran Eglin', 'Aron Macarow']
   spec.email = ['engineering@percentpledge.com']
 
-  spec.summary = 'A gem for interacting with the Finch API'
-  spec.description = 'A Ruby interface for the Finch API (tryfinch.com)'
+  spec.summary = 'Unofficial Ruby client for the Finch API'
+  spec.description = 'Unofficial Ruby client for the Finch universal HRIS API (developer.tryfinch.com)'
   spec.homepage = 'https://github.com/Percent-Pledge/finch-client'
   spec.license = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.5')
