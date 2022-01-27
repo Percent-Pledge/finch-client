@@ -3,6 +3,7 @@
 require 'httparty'
 
 require 'finch/client/api/connection'
+require 'finch/client/api/management'
 require 'finch/client/api/organization'
 
 module Finch
@@ -10,6 +11,7 @@ module Finch
     class API
       include HTTParty
       include Connection
+      include Management
       include Organization
 
       base_uri 'https://api.tryfinch.com'
