@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 1.25'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.8'
+  spec.add_development_dependency 'simplecov', '~> 0.21'
   spec.add_development_dependency 'webmock', '~> 3.0'
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

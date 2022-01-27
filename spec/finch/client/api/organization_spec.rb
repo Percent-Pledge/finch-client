@@ -10,26 +10,30 @@ RSpec.describe Finch::Client::API::Organization do
   end
 
   let(:dummy_class) do
-    Class.new do
-      include HTTParty
-      include Finch::Client::API::Connection
-      include Finch::Client::API::Organization
-
+    Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-      format :json
+
+      def initialize; end
     end
   end
 
   describe '#directory' do
     it 'makes a GET request to the directory path' do
-      stub_request(:get, 'https://example.com/directory')
+      stub_request(:get, 'https://example.com/employer/directory')
         .to_return(status: 200, body: { individuals: [] }.to_json)
 
       dummy_class.new.directory
     end
 
+    it 'lets you specify query parameters' do
+      stub_request(:get, 'https://example.com/employer/directory?limit=1')
+        .to_return(status: 200, body: { individuals: [] }.to_json)
+
+      dummy_class.new.directory(limit: 1)
+    end
+
     it 'returns an array of Resource objects for a namespaced collection' do
-      stub_request(:get, 'https://example.com/directory')
+      stub_request(:get, 'https://example.com/employer/directory')
         .to_return(status: 200, body: { individuals: [{ name: 'Finch' }] }.to_json)
 
       result = dummy_class.new.directory
@@ -42,10 +46,69 @@ RSpec.describe Finch::Client::API::Organization do
 
   describe '#company' do
     it 'makes a GET request to the company path' do
-      stub_request(:get, 'https://example.com/company')
+      stub_request(:get, 'https://example.com/employer/company')
         .to_return(status: 200, body: {}.to_json)
 
       dummy_class.new.company
+    end
+  end
+
+  describe '#individual' do
+    it 'makes a POST request to the individual path' do
+      stub_request(:post, 'https://example.com/employer/individual')
+        .to_return(status: 200, body: { responses: [] }.to_json)
+
+      dummy_class.new.individual({ individual_id: '1' })
+    end
+
+    it 'returns an array of Resource objects for a namespaced collection' do
+      stub_request(:post, 'https://example.com/employer/individual')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
+        .to_return(status: 200, body: { responses: [{ name: 'Finch' }] }.to_json)
+
+      result = dummy_class.new.individual({ individual_id: '1' })
+
+      expect(result).to be_a(Array)
+      expect(result.first).to be_a(Finch::Client::Resource)
+      expect(result.first.name).to eq('Finch')
+    end
+
+    it 'lets you specify multiple individual_ids' do
+      stub_request(:post, 'https://example.com/employer/individual')
+        .with(body: { requests: [{ individual_id: '1' }, { individual_id: '2' }] }.to_json)
+        .to_return(status: 200, body: { responses: [] }.to_json)
+
+      dummy_class.new.individual([{ individual_id: '1' }, { individual_id: '2' }])
+    end
+  end
+
+  describe '#employment' do
+    it 'makes a POST request to the employment path' do
+      stub_request(:post, 'https://example.com/employer/employment')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
+        .to_return(status: 200, body: { responses: [] }.to_json)
+
+      dummy_class.new.employment({ individual_id: '1' })
+    end
+
+    it 'returns an array of Resource objects for a namespaced collection' do
+      stub_request(:post, 'https://example.com/employer/employment')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
+        .to_return(status: 200, body: { responses: [{ name: 'Finch' }] }.to_json)
+
+      result = dummy_class.new.employment({ individual_id: '1' })
+
+      expect(result).to be_a(Array)
+      expect(result.first).to be_a(Finch::Client::Resource)
+      expect(result.first.name).to eq('Finch')
+    end
+
+    it 'lets you specify multiple individual_ids' do
+      stub_request(:post, 'https://example.com/employer/employment')
+        .with(body: { requests: [{ individual_id: '1' }, { individual_id: '2' }] }.to_json)
+        .to_return(status: 200, body: { responses: [] }.to_json)
+
+      dummy_class.new.employment([{ individual_id: '1' }, { individual_id: '2' }])
     end
   end
 end

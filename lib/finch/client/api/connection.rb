@@ -10,14 +10,18 @@ module Finch
           request(:get, path, options, resource_key)
         end
 
-        def post(path, options = {})
-          request(:post, path, options, nil)
+        def post(path, options = {}, resource_key = nil)
+          request(:post, path, options, resource_key)
+        end
+
+        def delete(path, options = {}, resource_key = nil)
+          request(:delete, path, options, resource_key)
         end
 
         private
 
         def request(http_method, path, options, resource_key)
-          response = self.class.send(http_method, path, { body: options })
+          response = self.class.send(http_method, path, options)
 
           if response.success?
             parse_response(response.parsed_response, resource_key)
