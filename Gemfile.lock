@@ -2,15 +2,30 @@ PATH
   remote: .
   specs:
     finch-client (0.1.0)
+      httparty (>= 0.15.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.8.0)
+      public_suffix (>= 2.0.2, < 5.0)
     ast (2.4.2)
+    byebug (11.1.3)
+    crack (0.4.5)
+      rexml
     diff-lcs (1.5.0)
+    hashdiff (1.0.1)
+    httparty (0.20.0)
+      mime-types (~> 3.0)
+      multi_xml (>= 0.5.2)
+    mime-types (3.4.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2022.0105)
+    multi_xml (0.6.0)
     parallel (1.21.0)
     parser (3.1.0.0)
       ast (~> 2.4.1)
+    public_suffix (4.0.6)
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.2.0)
@@ -43,6 +58,10 @@ GEM
       rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     unicode-display_width (2.1.0)
+    webmock (3.14.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   aarch64-linux
@@ -50,11 +69,13 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 2.0)
+  byebug (~> 11.0)
   finch-client!
   rake (~> 13.0)
   rspec (~> 3.0)
   rubocop (~> 1.25)
   rubocop-rspec (~> 2.8)
+  webmock (~> 3.0)
 
 BUNDLED WITH
    2.2.26

@@ -25,10 +25,14 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'httparty', '>= 0.15.0'
+
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'byebug', '~> 11.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rubocop', '~> 1.25'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.8'
+  spec.add_development_dependency 'webmock', '~> 3.0'
   spec.metadata['rubygems_mfa_required'] = 'true'
 end

@@ -11,6 +11,12 @@ Metrics/BlockLength:
 Style/Documentation:
   Enabled: false
 
+Style/GuardClause:
+  Enabled: false
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
 RSpec/ExampleLength:
   Enabled: false
 

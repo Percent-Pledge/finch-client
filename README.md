@@ -22,7 +22,48 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Write better usage instructions here
+
+## Basic usage
+
+Add the Finch configuration block early in your application (eg: a Rails initializer):
+
+```ruby
+Finch::Client.configure do |config|
+  config.client_id = '...'
+  config.client_secret = '...'
+  config.sandbox = false
+end
+```
+
+Next, you need the user to make a request to the Finch authorization endpoint:
+
+```ruby
+redirect_uri = 'https://example.com'
+permissions = 'company directory'
+optional_params = { state: 'abc' }
+
+# This helper will generate the URL that the client needs to visit.
+# Once complete, they'll be sent to `redirect_uri` with a `code` parameter - save that for the next step
+authorization_endpoint = Finch::Client::Connect.authorization_uri(redirect_uri, permissions, optional_params)
+```
+
+Once the user has authenticated, you need to exchange their short-lived code for a longer-lived access token
+
+```ruby
+redirect_uri = 'https://example.com'
+code = params[:code]
+access_token = Finch::Client::Connect.request_access_token(redirect_uri, code)
+```
+
+From there, you can store the access token for future use. An example API request would look like this:
+
+```ruby
+finch_client = Finch::Client::API.new(access_token)
+
+finch_client.company # Fetches a company's details
+finch_client.directory # Fetches user directory for a company
+```
 
 ## Development
 
