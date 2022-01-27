@@ -14,6 +14,10 @@ module Finch
           request(:post, path, options, resource_key)
         end
 
+        def delete(path, options = {}, resource_key = nil)
+          request(:delete, path, options, resource_key)
+        end
+
         private
 
         def request(http_method, path, options, resource_key)

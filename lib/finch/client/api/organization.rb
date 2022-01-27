@@ -12,16 +12,14 @@ module Finch
           get('/employer/company')
         end
 
-        def individual(individual_ids)
-          formatted_ids = array_wrap(individual_ids).map { |id| { individual_id: id.to_s } }
-          request_body = { requests: formatted_ids }.to_json
+        def individual(individual_requests)
+          request_body = { requests: array_wrap(individual_requests) }.to_json
 
           post('/employer/individual', { body: request_body }, 'responses')
         end
 
-        def employment(individual_ids)
-          formatted_ids = array_wrap(individual_ids).map { |id| { individual_id: id.to_s } }
-          request_body = { requests: formatted_ids }.to_json
+        def employment(individual_requests)
+          request_body = { requests: array_wrap(individual_requests) }.to_json
 
           post('/employer/employment', { body: request_body }, 'responses')
         end

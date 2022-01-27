@@ -58,62 +58,49 @@ RSpec.describe Finch::Client::API::Organization do
       stub_request(:post, 'https://example.com/employer/individual')
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.individual(1)
+      dummy_class.new.individual({ individual_id: '1' })
     end
 
     it 'returns an array of Resource objects for a namespaced collection' do
       stub_request(:post, 'https://example.com/employer/individual')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
         .to_return(status: 200, body: { responses: [{ name: 'Finch' }] }.to_json)
 
-      result = dummy_class.new.individual(1)
+      result = dummy_class.new.individual({ individual_id: '1' })
 
       expect(result).to be_a(Array)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
     end
 
-    it 'automatically formats the individual_ids as strings' do
-      stub_request(:post, 'https://example.com/employer/individual')
-        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
-        .to_return(status: 200, body: { responses: [] }.to_json)
-
-      dummy_class.new.individual(1)
-    end
-
-    it 'lets you specify multiple individual_id' do
+    it 'lets you specify multiple individual_ids' do
       stub_request(:post, 'https://example.com/employer/individual')
         .with(body: { requests: [{ individual_id: '1' }, { individual_id: '2' }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.individual([1, 2])
+      dummy_class.new.individual([{ individual_id: '1' }, { individual_id: '2' }])
     end
   end
 
   describe '#employment' do
     it 'makes a POST request to the employment path' do
       stub_request(:post, 'https://example.com/employer/employment')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.employment(1)
+      dummy_class.new.employment({ individual_id: '1' })
     end
 
     it 'returns an array of Resource objects for a namespaced collection' do
       stub_request(:post, 'https://example.com/employer/employment')
+        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
         .to_return(status: 200, body: { responses: [{ name: 'Finch' }] }.to_json)
 
-      result = dummy_class.new.employment(1)
+      result = dummy_class.new.employment({ individual_id: '1' })
 
       expect(result).to be_a(Array)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
-    end
-
-    it 'automatically formats the individual_id as strings' do
-      stub_request(:post, 'https://example.com/employer/employment')
-        .with(body: { requests: [{ individual_id: '1' }] }.to_json)
-        .to_return(status: 200, body: { responses: [] }.to_json)
-
-      dummy_class.new.employment(1)
     end
 
     it 'lets you specify multiple individual_ids' do
@@ -121,7 +108,7 @@ RSpec.describe Finch::Client::API::Organization do
         .with(body: { requests: [{ individual_id: '1' }, { individual_id: '2' }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.employment([1, 2])
+      dummy_class.new.employment([{ individual_id: '1' }, { individual_id: '2' }])
     end
   end
 end

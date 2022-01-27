@@ -76,4 +76,34 @@ RSpec.describe Finch::Client::API::Connection do
       expect { dummy_class.new.post('/test') }.to raise_error(Finch::Client::API::APIError, 'rate_limited')
     end
   end
+
+  describe '#delete' do
+    it 'makes a DELETE request to the specified path' do
+      stub_request(:delete, 'https://example.com/test').to_return(status: 201, body: '{}')
+
+      dummy_class.new.delete('/test')
+    end
+
+    it 'returns a Resource object for a singular resource' do
+      stub_request(:delete, 'https://example.com/test')
+        .to_return(status: 201, body: { name: 'Finch' }.to_json)
+
+      expect(dummy_class.new.delete('/test')).to be_a(Finch::Client::Resource)
+    end
+
+    it 'returns an array of Resource objects for a collection' do
+      stub_request(:delete, 'https://example.com/test')
+        .to_return(status: 201, body: [{ name: 'Finch' }].to_json)
+
+      expect(dummy_class.new.delete('/test')).to be_a(Array)
+      expect(dummy_class.new.delete('/test').first).to be_a(Finch::Client::Resource)
+    end
+
+    it 'throws if there was an API error' do
+      stub_request(:delete, 'https://example.com/test')
+        .to_return(status: 429, body: { message: 'rate_limited' }.to_json)
+
+      expect { dummy_class.new.delete('/test') }.to raise_error(Finch::Client::API::APIError, 'rate_limited')
+    end
+  end
 end

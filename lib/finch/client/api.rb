@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'httparty'
-
 require 'finch/client/api/connection'
 
 require 'finch/client/api/payroll'
+require 'finch/client/api/benefits'
 require 'finch/client/api/management'
 require 'finch/client/api/organization'
 
@@ -15,6 +15,7 @@ module Finch
       include Connection
 
       include Payroll
+      include Benefits
       include Management
       include Organization
 
