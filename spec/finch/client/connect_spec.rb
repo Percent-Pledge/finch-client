@@ -44,14 +44,14 @@ RSpec.describe Finch::Client::Connect do
         .with(basic_auth: [Finch::Client.configuration.client_id, Finch::Client.configuration.client_secret])
         .to_return(headers: { content_type: 'application/json' }, body: { access_token: '' }.to_json)
 
-      described_class.request_access_token('12345', 'example.com')
+      described_class.request_access_token('example.com', '12345')
     end
 
     it 'returns the access token' do
       stub_request(:post, 'https://api.tryfinch.com/auth/token')
         .to_return(headers: { content_type: 'application/json' }, body: { access_token: 'abcdef' }.to_json)
 
-      expect(described_class.request_access_token('12345', 'example.com')).to eq('abcdef')
+      expect(described_class.request_access_token('example.com', '12345')).to eq('abcdef')
     end
 
     it 'throws if request was unsuccessful' do
@@ -63,7 +63,7 @@ RSpec.describe Finch::Client::Connect do
         )
 
       expect do
-        described_class.request_access_token('12345', 'example.com')
+        described_class.request_access_token('example.com', '12345')
       end.to raise_error(Finch::Client::Connect::AccessTokenError, 'Invalid code')
     end
   end

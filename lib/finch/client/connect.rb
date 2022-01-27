@@ -20,8 +20,8 @@ module Finch
           )
         end
 
-        def request_access_token(code, redirect_uri)
-          response = do_request_access_token(code, redirect_uri)
+        def request_access_token(redirect_uri, code)
+          response = do_request_access_token(redirect_uri, code)
 
           if response.success?
             response.parsed_response['access_token']
@@ -40,7 +40,7 @@ module Finch
           end
         end
 
-        def do_request_access_token(code, redirect_uri)
+        def do_request_access_token(redirect_uri, code)
           HTTParty.post(
             'https://api.tryfinch.com/auth/token',
             headers: {
