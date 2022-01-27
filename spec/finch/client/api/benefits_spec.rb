@@ -103,12 +103,12 @@ RSpec.describe Finch::Client::API::Benefits do
     end
   end
 
-  describe '#enroll_individual_in_benefit' do
+  describe '#enroll_individual_in_benefits' do
     it 'makes a POST request to the benefit path' do
       stub_request(:post, 'https://example.com/employer/benefits/12345/individuals')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.enroll_individual_in_benefit(12_345, {})
+      dummy_class.new.enroll_individual_in_benefits(12_345, {})
     end
 
     it 'lets you specify request body' do
@@ -116,17 +116,17 @@ RSpec.describe Finch::Client::API::Benefits do
         .with(body: [{ individual_data: {} }].to_json)
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.enroll_individual_in_benefit(12_345, { individual_data: {} })
+      dummy_class.new.enroll_individual_in_benefits(12_345, { individual_data: {} })
     end
   end
 
-  describe '#unenroll_individual_from_benefit' do
+  describe '#unenroll_individual_from_benefits' do
     it 'makes a DELETE request to the benefit path' do
       stub_request(:delete, 'https://example.com/employer/benefits/12345/individuals')
         .with(body: { individual_ids: [56_789] }.to_json)
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.unenroll_individual_from_benefit(12_345, 56_789)
+      dummy_class.new.unenroll_individual_from_benefits(12_345, 56_789)
     end
 
     it 'lets you specify multiple individual_ids' do
@@ -134,7 +134,7 @@ RSpec.describe Finch::Client::API::Benefits do
         .with(body: { individual_ids: [56_789, 12_345] }.to_json)
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.unenroll_individual_from_benefit(12_345, [56_789, 12_345])
+      dummy_class.new.unenroll_individual_from_benefits(12_345, [56_789, 12_345])
     end
   end
 end
