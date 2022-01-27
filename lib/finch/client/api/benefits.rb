@@ -34,13 +34,13 @@ module Finch
           get("/employer/benefits/#{benefit_id}/individuals", { query: query_params })
         end
 
-        def enroll_individual_in_benefit(benefit_id, enrollment_data)
+        def enroll_individual_in_benefits(benefit_id, enrollment_data)
           request_body = array_wrap(enrollment_data).to_json
 
           post("/employer/benefits/#{benefit_id}/individuals", { body: request_body })
         end
 
-        def unenroll_individual_from_benefit(benefit_id, individual_ids)
+        def unenroll_individual_from_benefits(benefit_id, individual_ids)
           request_body = { individual_ids: array_wrap(individual_ids) }.to_json
 
           delete("/employer/benefits/#{benefit_id}/individuals", { body: request_body })
