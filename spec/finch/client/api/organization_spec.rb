@@ -22,14 +22,14 @@ RSpec.describe Finch::Client::API::Organization do
 
   describe '#directory' do
     it 'makes a GET request to the directory path' do
-      stub_request(:get, 'https://example.com/directory')
+      stub_request(:get, 'https://example.com/employer/directory')
         .to_return(status: 200, body: { individuals: [] }.to_json)
 
       dummy_class.new.directory
     end
 
     it 'returns an array of Resource objects for a namespaced collection' do
-      stub_request(:get, 'https://example.com/directory')
+      stub_request(:get, 'https://example.com/employer/directory')
         .to_return(status: 200, body: { individuals: [{ name: 'Finch' }] }.to_json)
 
       result = dummy_class.new.directory
@@ -42,7 +42,7 @@ RSpec.describe Finch::Client::API::Organization do
 
   describe '#company' do
     it 'makes a GET request to the company path' do
-      stub_request(:get, 'https://example.com/company')
+      stub_request(:get, 'https://example.com/employer/company')
         .to_return(status: 200, body: {}.to_json)
 
       dummy_class.new.company

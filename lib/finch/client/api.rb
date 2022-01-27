@@ -12,7 +12,7 @@ module Finch
       include Connection
       include Organization
 
-      base_uri 'https://api.tryfinch.com/employer'
+      base_uri 'https://api.tryfinch.com'
       format :json
 
       def initialize(access_token)
