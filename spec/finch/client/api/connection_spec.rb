@@ -10,12 +10,10 @@ RSpec.describe Finch::Client::API::Connection do
   end
 
   let(:dummy_class) do
-    Class.new do
-      include HTTParty
-      include Finch::Client::API::Connection
-
+    Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-      format :json
+
+      def initialize; end
     end
   end
 

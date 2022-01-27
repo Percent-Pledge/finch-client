@@ -10,13 +10,10 @@ RSpec.describe Finch::Client::API::Organization do
   end
 
   let(:dummy_class) do
-    Class.new do
-      include HTTParty
-      include Finch::Client::API::Connection
-      include Finch::Client::API::Organization
-
+    Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-      format :json
+
+      def initialize; end
     end
   end
 
@@ -119,7 +116,7 @@ RSpec.describe Finch::Client::API::Organization do
       dummy_class.new.employment(1)
     end
 
-    it 'lets you specify multiple individual_id' do
+    it 'lets you specify multiple individual_ids' do
       stub_request(:post, 'https://example.com/employer/employment')
         .with(body: { requests: [{ individual_id: '1' }, { individual_id: '2' }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
