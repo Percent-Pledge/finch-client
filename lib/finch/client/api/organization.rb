@@ -5,7 +5,11 @@ module Finch
     class API
       module Organization
         def directory
-          get('/directory')
+          get('/directory', {}, 'individuals')
+        end
+
+        def company
+          get('/company')
         end
       end
     end
