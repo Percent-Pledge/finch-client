@@ -3,10 +3,15 @@
 module Finch
   module Client
     class Resource
-      attr_reader :data
+      attr_reader :data, :raw_data
 
       def initialize(data)
+        @raw_data = data
         @data = recursively_create_resources(data)
+      end
+
+      def to_h
+        @raw_data
       end
 
       def method_missing(method_name, *arguments, &block)

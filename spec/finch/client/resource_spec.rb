@@ -35,6 +35,15 @@ RSpec.describe Finch::Client::Resource do
     end
   end
 
+  describe '#to_h' do
+    it 'returns the raw data as a hash' do
+      data = { 'name' => 'Finch', 'nested' => { 'id' => 1 } }
+      resource = described_class.new(data)
+
+      expect(resource.to_h).to eq(data)
+    end
+  end
+
   describe '#method_missing' do
     it 'delegates to the data attribute' do
       data = { 'name' => 'Finch' }
