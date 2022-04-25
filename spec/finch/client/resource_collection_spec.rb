@@ -16,6 +16,18 @@ RSpec.describe Finch::Client::ResourceCollection do
 
       expect(resource.data).to all(be_a(Finch::Client::Resource))
     end
+
+    it 'allows you to set headers' do
+      resource = described_class.new({}, { 'X-Finch-Test' => 'test' })
+
+      expect(resource.headers['X-Finch-Test']).to eq('test')
+    end
+
+    it 'sets a default value for headers' do
+      resource = described_class.new({})
+
+      expect(resource.headers).to eq({})
+    end
   end
 
   describe '#each' do

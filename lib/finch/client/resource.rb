@@ -3,11 +3,12 @@
 module Finch
   module Client
     class Resource
-      attr_reader :data, :raw_data
+      attr_reader :data, :raw_data, :headers
 
-      def initialize(data)
+      def initialize(data, headers = {})
         @raw_data = data
         @data = recursively_create_resources(data)
+        @headers = headers
       end
 
       def to_h
