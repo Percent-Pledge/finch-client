@@ -47,7 +47,7 @@ RSpec.describe Finch::Client::API::Payroll do
 
       result = dummy_class.new.pay_statement({})
 
-      expect(result).to be_a(Array)
+      expect(result).to be_a(Finch::Client::ResourceCollection)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
     end

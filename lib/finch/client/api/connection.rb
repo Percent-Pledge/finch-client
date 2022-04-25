@@ -3,7 +3,14 @@
 module Finch
   module Client
     class API
-      class APIError < StandardError; end
+      class APIError < StandardError
+        attr_reader :response
+
+        def initialize(message, response)
+          super(message)
+          @response = response
+        end
+      end
 
       module Connection
         def get(path, options = {}, resource_key = nil)
@@ -24,18 +31,18 @@ module Finch
           response = self.class.send(http_method, path, options)
 
           if response.success?
-            parse_response(response.parsed_response, resource_key)
+            parse_response(response.parsed_response, response.headers, resource_key)
           else
-            raise APIError, response.parsed_response['message']
+            raise APIError.new(response.parsed_response['message'], response)
           end
         end
 
-        def parse_response(data, resource_key)
+        def parse_response(data, headers, resource_key)
           data = resource_key ? data[resource_key] : data
 
           case data
-          when Hash then Resource.new(data)
-          when Array then data.map { |item| item.is_a?(Hash) ? Resource.new(item) : item }
+          when Hash then Resource.new(data, headers)
+          when Array then ResourceCollection.new(data, headers)
           else raise(ArgumentError, "Unable to parse response - expected Hash or Array: #{data.inspect}")
           end
         end

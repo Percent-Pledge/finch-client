@@ -33,6 +33,18 @@ RSpec.describe Finch::Client::Resource do
       expect(resource.nested.first).to be_a(described_class)
       expect(resource.nested.last).to be_a(String)
     end
+
+    it 'allows you to set headers' do
+      resource = described_class.new({}, { 'X-Finch-Test' => 'test' })
+
+      expect(resource.headers['X-Finch-Test']).to eq('test')
+    end
+
+    it 'sets a default value for headers' do
+      resource = described_class.new({})
+
+      expect(resource.headers).to eq({})
+    end
   end
 
   describe '#to_h' do

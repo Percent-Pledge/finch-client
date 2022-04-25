@@ -68,7 +68,7 @@ finch_client = Finch::Client::API.new(access_token)
 
 Keep in mind that this client instance is scoped only to the provided access token. You'll need to create a new client if you want to work with a different access token.
 
-From here, you're set to use any of the Finch APIs listed below!
+From here, you're set to use any of the Finch APIs listed below! All objects returned from API calls respond to `.headers` if you need to access the raw Finch headers.
 
 ### Organization APIs
 

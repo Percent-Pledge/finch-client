@@ -38,7 +38,7 @@ RSpec.describe Finch::Client::API::Organization do
 
       result = dummy_class.new.directory
 
-      expect(result).to be_a(Array)
+      expect(result).to be_a(Finch::Client::ResourceCollection)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
     end
@@ -68,7 +68,7 @@ RSpec.describe Finch::Client::API::Organization do
 
       result = dummy_class.new.individual({ individual_id: '1' })
 
-      expect(result).to be_a(Array)
+      expect(result).to be_a(Finch::Client::ResourceCollection)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
     end
@@ -98,7 +98,7 @@ RSpec.describe Finch::Client::API::Organization do
 
       result = dummy_class.new.employment({ individual_id: '1' })
 
-      expect(result).to be_a(Array)
+      expect(result).to be_a(Finch::Client::ResourceCollection)
       expect(result.first).to be_a(Finch::Client::Resource)
       expect(result.first.name).to eq('Finch')
     end
