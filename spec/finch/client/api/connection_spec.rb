@@ -35,7 +35,7 @@ RSpec.describe Finch::Client::API::Connection do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: [{ name: 'Finch' }].to_json)
 
-      expect(dummy_class.new.get('/test')).to be_a(Array)
+      expect(dummy_class.new.get('/test')).to be_a(Finch::Client::ResourceCollection)
       expect(dummy_class.new.get('/test').first).to be_a(Finch::Client::Resource)
     end
 
@@ -65,7 +65,7 @@ RSpec.describe Finch::Client::API::Connection do
       stub_request(:post, 'https://example.com/test')
         .to_return(status: 201, body: [{ name: 'Finch' }].to_json)
 
-      expect(dummy_class.new.post('/test')).to be_a(Array)
+      expect(dummy_class.new.post('/test')).to be_a(Finch::Client::ResourceCollection)
       expect(dummy_class.new.post('/test').first).to be_a(Finch::Client::Resource)
     end
 
@@ -95,7 +95,7 @@ RSpec.describe Finch::Client::API::Connection do
       stub_request(:delete, 'https://example.com/test')
         .to_return(status: 201, body: [{ name: 'Finch' }].to_json)
 
-      expect(dummy_class.new.delete('/test')).to be_a(Array)
+      expect(dummy_class.new.delete('/test')).to be_a(Finch::Client::ResourceCollection)
       expect(dummy_class.new.delete('/test').first).to be_a(Finch::Client::Resource)
     end
 

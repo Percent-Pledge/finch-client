@@ -35,7 +35,8 @@ module Finch
 
           case data
           when Hash then Resource.new(data)
-          when Array then data.map { |item| item.is_a?(Hash) ? Resource.new(item) : item }
+          when Array then ResourceCollection.new(data)
+          # when Array then data.map { |item| item.is_a?(Hash) ? Resource.new(item) : item }
           else raise(ArgumentError, "Unable to parse response - expected Hash or Array: #{data.inspect}")
           end
         end
