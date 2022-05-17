@@ -64,6 +64,13 @@ RSpec.describe Finch::Client::Resource do
       expect(resource.name).to eq(data['name'])
     end
 
+    it 'delegates to the data attribute even if its value is false' do
+      data = { 'is_active' => false }
+      resource = described_class.new(data)
+
+      expect(resource.is_active).to eq(data['is_active'])
+    end
+
     it 'raises an error if the data attribute does not respond to the method' do
       resource = described_class.new({})
 
