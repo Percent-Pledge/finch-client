@@ -16,7 +16,7 @@ module Finch
       end
 
       def method_missing(method_name, *arguments, &block)
-        data[method_name] || super
+        respond_to?(method_name) ? data[method_name] : super
       end
 
       def respond_to_missing?(method_name, include_private = false)
