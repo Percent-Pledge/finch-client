@@ -19,6 +19,8 @@ module Finch
       include Management
       include Organization
 
+      default_timeout 180
+
       base_uri 'https://api.tryfinch.com'
       format :json
 
