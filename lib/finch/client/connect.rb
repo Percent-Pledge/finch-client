@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'httparty'
+require 'base64'
 
 module Finch
   module Client
