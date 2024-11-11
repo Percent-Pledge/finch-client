@@ -10,11 +10,11 @@ RSpec.describe Finch::Client::API::Payroll do
   end
 
   let(:dummy_class) do
-    Class.new(Finch::Client::API) do
+    klass = Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-
-      def initialize; end
     end
+
+    klass.new('access_token')
   end
 
   describe '#payment' do
@@ -22,14 +22,14 @@ RSpec.describe Finch::Client::API::Payroll do
       stub_request(:get, 'https://example.com/employer/payment')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.payment
+      dummy_class.payment
     end
 
     it 'lets you specify query parameters' do
       stub_request(:get, 'https://example.com/employer/payment?limit=1')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.payment(limit: 1)
+      dummy_class.payment(limit: 1)
     end
   end
 
@@ -38,14 +38,14 @@ RSpec.describe Finch::Client::API::Payroll do
       stub_request(:post, 'https://example.com/employer/pay-statement')
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.pay_statement({ payment_id: 1 })
+      dummy_class.pay_statement({ payment_id: 1 })
     end
 
     it 'returns an array of Resource objects for a namespaced collection' do
       stub_request(:post, 'https://example.com/employer/pay-statement')
         .to_return(status: 200, body: { responses: [{ name: 'Finch' }] }.to_json)
 
-      result = dummy_class.new.pay_statement({})
+      result = dummy_class.pay_statement({})
 
       expect(result).to be_a(Finch::Client::ResourceCollection)
       expect(result.first).to be_a(Finch::Client::Resource)
@@ -57,7 +57,7 @@ RSpec.describe Finch::Client::API::Payroll do
         .with(body: { requests: [{ payment_id: 1 }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.pay_statement({ payment_id: 1 })
+      dummy_class.pay_statement({ payment_id: 1 })
     end
 
     it 'lets you specify multiple payments to look up' do
@@ -65,7 +65,7 @@ RSpec.describe Finch::Client::API::Payroll do
         .with(body: { requests: [{ payment_id: 1 }, { payment_id: 2 }] }.to_json)
         .to_return(status: 200, body: { responses: [] }.to_json)
 
-      dummy_class.new.pay_statement([{ payment_id: 1 }, { payment_id: 2 }])
+      dummy_class.pay_statement([{ payment_id: 1 }, { payment_id: 2 }])
     end
   end
 end
