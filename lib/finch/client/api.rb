@@ -22,6 +22,7 @@ module Finch
       include Management
       include Organization
 
+      # TODO: see if I can make configurable
       default_timeout 180
 
       base_uri 'https://api.tryfinch.com'

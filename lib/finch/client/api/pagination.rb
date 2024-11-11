@@ -4,8 +4,7 @@ module Finch
   module Client
     class API
       module Pagination
-        # TODO: increase
-        BATCH_SIZE = 3
+        BATCH_SIZE = 250
         MAX_SLEEP_SECONDS = 60
         # Arbitrary number to prevent infinite loops
         MAX_RATE_LIMIT_ERRORS = 25
