@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'httparty'
 require 'finch/client/api/connection'
+require 'finch/client/api/pagination'
 
 require 'finch/client/api/payroll'
 require 'finch/client/api/benefits'
@@ -13,6 +15,7 @@ module Finch
     class API
       include HTTParty
       include Connection
+      include Pagination
 
       include Payroll
       include Benefits
@@ -23,6 +26,8 @@ module Finch
 
       base_uri 'https://api.tryfinch.com'
       format :json
+      # TODO: remove
+      logger ::Logger.new($stdout)
 
       def initialize(access_token)
         self.class.default_options.merge!(headers: {

@@ -5,7 +5,9 @@ module Finch
     class API
       module Organization
         def directory(options = {})
-          get('/employer/directory', { query: options }, 'individuals')
+          with_pagination(options) do |query_options|
+            get('/employer/directory', { query: query_options }, 'individuals')
+          end
         end
 
         def company

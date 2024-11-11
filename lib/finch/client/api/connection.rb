@@ -37,12 +37,12 @@ module Finch
           end
         end
 
-        def parse_response(data, headers, resource_key)
-          data = data[resource_key] if resource_key
+        def parse_response(response_body, headers, resource_key)
+          data = resource_key ? response_body[resource_key] : response_body
 
           case data
-          when Hash then Resource.new(data, headers)
-          when Array then ResourceCollection.new(data, headers)
+          when Hash then Resource.new(data, headers, response_body)
+          when Array then ResourceCollection.new(data, headers, response_body)
           else raise(ArgumentError, "Unable to parse response - expected Hash or Array: #{data.inspect}")
           end
         end
