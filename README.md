@@ -230,6 +230,10 @@ finch_client.disconnect
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
+If you're using Docker, start the container with `docker compose up`, optionally passing the `-d` flag to start it in the background. From there, open a shell in the container with `docker compose exec gem bash` and run your `rake spec` or `bin/console` commands.
+
+Finally, Rubocop is included for linting. Run `rubocop` to check for any style violations.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/Percent-Pledge/finch-client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
