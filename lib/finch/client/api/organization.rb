@@ -15,15 +15,15 @@ module Finch
         end
 
         def individual(individual_requests)
-          request_body = { requests: array_wrap(individual_requests) }.to_json
-
-          post('/employer/individual', { body: request_body }, 'responses')
+          with_batching(individual_requests) do |batch|
+            post('/employer/individual', { body: batch }, 'responses')
+          end
         end
 
         def employment(individual_requests)
-          request_body = { requests: array_wrap(individual_requests) }.to_json
-
-          post('/employer/employment', { body: request_body }, 'responses')
+          with_batching(individual_requests) do |batch|
+            post('/employer/employment', { body: batch }, 'responses')
+          end
         end
       end
     end

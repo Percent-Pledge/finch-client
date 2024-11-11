@@ -5,7 +5,7 @@ module Finch
     class API
       module Pagination
         # TODO: increase
-        BATCH_SIZE = 25
+        BATCH_SIZE = 3
         MAX_SLEEP_SECONDS = 60
         # Arbitrary number to prevent infinite loops
         MAX_RATE_LIMIT_ERRORS = 25
@@ -29,6 +29,18 @@ module Finch
           result
         end
 
+        # TODO: doc and test
+        def with_batching(request_objects, &block)
+          result = ResourceCollection.new([])
+
+          request_objects.each_slice(BATCH_SIZE) do |batch|
+            response = make_request_with_backoff({ requests: batch }.to_json, &block)
+            result.merge(response)
+          end
+
+          result
+        end
+
         private
 
         # If the user specifies any limit or offset, we assume they're acting intentionally
@@ -37,12 +49,12 @@ module Finch
         end
 
         # TODO: add logging
-        def make_request_with_backoff(options)
+        def make_request_with_backoff(*args)
           rate_limit_error_count = 0
 
           begin
-            puts "Making request with options: #{options}"
-            yield(options)
+            puts "Making request with args: #{args}"
+            yield(*args)
           rescue APIError => e
             if e.response.code == 429 && rate_limit_error_count < MAX_RATE_LIMIT_ERRORS
               rate_limit_error_count += 1
