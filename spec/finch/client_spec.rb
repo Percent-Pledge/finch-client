@@ -2,7 +2,7 @@
 
 RSpec.describe Finch::Client do
   it 'has a version number' do
-    expect(Finch::Client::VERSION).not_to be nil
+    expect(Finch::Client::VERSION).not_to be_nil
   end
 
   describe '#configure' do

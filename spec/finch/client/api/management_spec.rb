@@ -10,11 +10,11 @@ RSpec.describe Finch::Client::API::Management do
   end
 
   let(:dummy_class) do
-    Class.new(Finch::Client::API) do
+    klass = Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-
-      def initialize; end
     end
+
+    klass.new('access_token')
   end
 
   describe '#introspect' do
@@ -22,7 +22,7 @@ RSpec.describe Finch::Client::API::Management do
       stub_request(:get, 'https://example.com/introspect')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.introspect
+      dummy_class.introspect
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe Finch::Client::API::Management do
       stub_request(:get, 'https://example.com/providers')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.providers
+      dummy_class.providers
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Finch::Client::API::Management do
       stub_request(:post, 'https://example.com/disconnect')
         .to_return(status: 200, body: {}.to_json)
 
-      dummy_class.new.disconnect
+      dummy_class.disconnect
     end
   end
 end

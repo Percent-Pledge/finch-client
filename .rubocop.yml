@@ -22,3 +22,7 @@ RSpec/ExampleLength:
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/NoExpectationExample:
+  AllowedPatterns:
+    - stub_request

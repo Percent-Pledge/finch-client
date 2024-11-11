@@ -10,11 +10,11 @@ RSpec.describe Finch::Client::API::Connection do
   end
 
   let(:dummy_class) do
-    Class.new(Finch::Client::API) do
+    klass = Class.new(Finch::Client::API) do
       base_uri 'https://example.com'
-
-      def initialize; end
     end
+
+    klass.new('access_token')
   end
 
   describe 'all request types' do
@@ -22,43 +22,43 @@ RSpec.describe Finch::Client::API::Connection do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: { name: 'Finch' }.to_json)
 
-      expect(dummy_class.new.get('/test')).to be_a(Finch::Client::Resource)
+      expect(dummy_class.get('/test')).to be_a(Finch::Client::Resource)
     end
 
     it 'passes header data to singular resources' do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: {}.to_json, headers: { 'X-Finch-Test' => 'test' })
 
-      expect(dummy_class.new.get('/test').headers['X-Finch-Test']).to eq('test')
+      expect(dummy_class.get('/test').headers['X-Finch-Test']).to eq('test')
     end
 
     it 'returns a collection of Resource objects for a collection' do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: [{ name: 'Finch' }].to_json)
 
-      expect(dummy_class.new.get('/test')).to be_a(Finch::Client::ResourceCollection)
-      expect(dummy_class.new.get('/test').first).to be_a(Finch::Client::Resource)
+      expect(dummy_class.get('/test')).to be_a(Finch::Client::ResourceCollection)
+      expect(dummy_class.get('/test').first).to be_a(Finch::Client::Resource)
     end
 
     it 'passes header data to a collection of resources' do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: [{}].to_json, headers: { 'X-Finch-Test' => 'test' })
 
-      expect(dummy_class.new.get('/test').headers['X-Finch-Test']).to eq('test')
+      expect(dummy_class.get('/test').headers['X-Finch-Test']).to eq('test')
     end
 
     it 'throws if there was an API error' do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 429, body: { message: 'rate_limited' }.to_json)
 
-      expect { dummy_class.new.get('/test') }.to raise_error(Finch::Client::API::APIError, 'rate_limited')
+      expect { dummy_class.get('/test') }.to raise_error(Finch::Client::API::APIError, 'rate_limited')
     end
 
     it 'returns full response in error' do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 429, body: { message: 'rate_limited' }.to_json)
 
-      expect { dummy_class.new.get('/test') }.to raise_error do |error|
+      expect { dummy_class.get('/test') }.to raise_error do |error|
         expect(error.response).to be_a(HTTParty::Response)
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe Finch::Client::API::Connection do
     it 'makes a GET request to the specified path' do
       stub_request(:get, 'https://example.com/test').to_return(status: 200, body: '{}')
 
-      dummy_class.new.get('/test')
+      dummy_class.get('/test')
     end
   end
 
@@ -76,7 +76,7 @@ RSpec.describe Finch::Client::API::Connection do
     it 'makes a POST request to the specified path' do
       stub_request(:post, 'https://example.com/test').to_return(status: 201, body: '{}')
 
-      dummy_class.new.post('/test')
+      dummy_class.post('/test')
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe Finch::Client::API::Connection do
     it 'makes a DELETE request to the specified path' do
       stub_request(:delete, 'https://example.com/test').to_return(status: 201, body: '{}')
 
-      dummy_class.new.delete('/test')
+      dummy_class.delete('/test')
     end
   end
 end

@@ -38,7 +38,7 @@ module Finch
         end
 
         def parse_response(data, headers, resource_key)
-          data = resource_key ? data[resource_key] : data
+          data = data[resource_key] if resource_key
 
           case data
           when Hash then Resource.new(data, headers)
