@@ -2,6 +2,7 @@
 
 require 'logger'
 require 'httparty'
+require 'finch/client/helpers'
 require 'finch/client/api/connection'
 require 'finch/client/api/pagination'
 
@@ -13,6 +14,7 @@ require 'finch/client/api/organization'
 module Finch
   module Client
     class API
+      include Helpers
       include HTTParty
       include Connection
       include Pagination
@@ -38,18 +40,6 @@ module Finch
           'Content-Type' => 'application/json',
           'Finch-API-Version' => '2020-09-17'
         })
-      end
-
-      private
-
-      def array_wrap(object)
-        if object.nil?
-          []
-        elsif object.respond_to?(:to_ary)
-          object.to_ary || [object]
-        else
-          [object]
-        end
       end
     end
   end

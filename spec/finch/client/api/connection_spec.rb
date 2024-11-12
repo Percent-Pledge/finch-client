@@ -44,7 +44,7 @@ RSpec.describe Finch::Client::API::Connection do
       stub_request(:get, 'https://example.com/test')
         .to_return(status: 200, body: [{}].to_json, headers: { 'X-Finch-Test' => 'test' })
 
-      expect(dummy_class.get('/test').headers['X-Finch-Test']).to eq('test')
+      expect(dummy_class.get('/test').headers.first['X-Finch-Test']).to eq('test')
     end
 
     it 'throws if there was an API error' do

@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require 'finch/client/helpers'
+
 RSpec.describe(Finch::Client::API::Pagination) do
   include described_class
+  include Finch::Client::Helpers
 
   let(:batch_size) { described_class::BATCH_SIZE }
   let(:response_double) { double }

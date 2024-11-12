@@ -43,7 +43,7 @@ RSpec.describe Finch::Client::Resource do
     it 'sets a default value for headers' do
       resource = described_class.new({})
 
-      expect(resource.headers).to eq({})
+      expect(resource.headers).to be_nil
     end
   end
 

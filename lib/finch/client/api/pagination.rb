@@ -46,7 +46,7 @@ module Finch
         def with_batching(request_objects, &block)
           result = ResourceCollection.new([])
 
-          request_objects.each_slice(BATCH_SIZE) do |batch|
+          array_wrap(request_objects).each_slice(BATCH_SIZE) do |batch|
             response = make_request_with_backoff({ requests: batch }.to_json, &block)
             result.merge(response)
           end
