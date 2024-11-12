@@ -24,15 +24,10 @@ module Finch
       include Management
       include Organization
 
-      # TODO: see if I can make configurable
       default_timeout 180
 
       base_uri 'https://api.tryfinch.com'
       format :json
-      # TODO: remove
-      # TODO: Add better logging app-wide. Maybe I don't need to remove, then?
-
-      # logger ::Logger.new($stdout)
 
       def initialize(access_token)
         self.class.default_options.merge!(headers: {

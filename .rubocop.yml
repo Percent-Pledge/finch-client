@@ -11,6 +11,9 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
+Metrics/AbcSize:
+  Max: 25
+
 # TODO: re-enable once PR approved
 # Style/MethodCallWithArgsParentheses:
 #   AllowParenthesesInChaining: false

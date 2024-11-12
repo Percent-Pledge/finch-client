@@ -6,7 +6,6 @@ require 'httparty'
 module Finch
   module Client
     module Helpers
-      # TODO: test
       def array_wrap(object)
         if object.nil?
           []
@@ -15,6 +14,11 @@ module Finch
         else
           [object]
         end
+      end
+
+      # This helps expose the logger to the API class
+      def logger
+        Finch::Client.configuration.logger
       end
     end
   end

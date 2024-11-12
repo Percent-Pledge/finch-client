@@ -61,19 +61,18 @@ module Finch
           query_options[:limit].nil? && query_options[:offset].nil?
         end
 
-        # TODO: add logging
         def make_request_with_backoff(*args)
           rate_limit_error_count = 0
 
           begin
-            puts "Making request with args: #{args}"
+            logger.debug { "Making request with args: #{args}" }
             yield(*args)
           rescue APIError => e
             if e.response.code == 429 && rate_limit_error_count < MAX_RATE_LIMIT_ERRORS
               rate_limit_error_count += 1
               sleep_time = [BACKOFF_ALGORITHM.call(rate_limit_error_count), MAX_SLEEP_SECONDS].min
 
-              puts "Rate limit error #{rate_limit_error_count} - sleeping for #{sleep_time} seconds"
+              logger.info { "Rate limited. Sleeping for #{sleep_time} seconds before retrying." }
               sleep(sleep_time)
               retry
             else
