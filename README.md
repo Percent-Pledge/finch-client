@@ -28,6 +28,8 @@ Finch::Client.configure do |config|
   config.client_secret = '...'
   # Set this to `false` in production and `true` in any testing environment
   config.sandbox = false
+  # Optional: set a logger. Defaults to $stdout
+  config.logger = Logger.new(...)
 end
 ```
 
