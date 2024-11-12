@@ -11,7 +11,6 @@ module Finch
         @raw_data = data
         @raw_response = raw_response
         @data = data.map { |item| item.is_a?(Hash) ? Resource.new(item, headers) : item }
-        # TODO: test
         @headers = [headers].compact
       end
 
@@ -20,11 +19,11 @@ module Finch
         data.each(&block)
       end
 
-      # TODO: test
       def merge(other)
         @headers += other.headers
         @raw_data += other.raw_data
         @data += other.data
+
         self
       end
     end
