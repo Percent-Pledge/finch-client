@@ -16,6 +16,9 @@ Metrics/MethodLength:
 #   AllowParenthesesInChaining: false
 #   Enabled: true
 
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
 Style/Documentation:
   Enabled: false
 
@@ -34,3 +37,6 @@ RSpec/MultipleExpectations:
 RSpec/NoExpectationExample:
   AllowedPatterns:
     - stub_request
+
+RSpec/VerifiedDoubles:
+  IgnoreSymbolicNames: true
