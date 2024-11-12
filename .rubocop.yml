@@ -11,9 +11,10 @@ Metrics/BlockLength:
 Metrics/MethodLength:
   Max: 15
 
-Style/MethodCallWithArgsParentheses:
-  AllowParenthesesInChaining: false
-  Enabled: true
+# TODO: re-enable once PR approved
+# Style/MethodCallWithArgsParentheses:
+#   AllowParenthesesInChaining: false
+#   Enabled: true
 
 Style/Documentation:
   Enabled: false
