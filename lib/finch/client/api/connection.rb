@@ -29,20 +29,29 @@ module Finch
 
         def request(http_method, path, options, resource_key)
           response = self.class.send(http_method, path, options)
+          logging_context = {
+            http_method: http_method.upcase,
+            path: path,
+            response_code: response.code,
+            response_body: response.parsed_response,
+            headers: response.headers
+          }
 
           if response.success?
+            logger.debug { "Finch API request successful. Context: #{logging_context}" }
             parse_response(response.parsed_response, response.headers, resource_key)
           else
-            raise APIError.new(response.parsed_response['message'], response)
+            logger.error { "Finch API request failed. Context: #{logging_context}" }
+            raise(APIError.new(response.parsed_response['message'], response))
           end
         end
 
-        def parse_response(data, headers, resource_key)
-          data = data[resource_key] if resource_key
+        def parse_response(response_body, headers, resource_key)
+          data = resource_key ? response_body[resource_key] : response_body
 
           case data
-          when Hash then Resource.new(data, headers)
-          when Array then ResourceCollection.new(data, headers)
+          when Hash then Resource.new(data, headers, response_body)
+          when Array then ResourceCollection.new(data, headers, response_body)
           else raise(ArgumentError, "Unable to parse response - expected Hash or Array: #{data.inspect}")
           end
         end

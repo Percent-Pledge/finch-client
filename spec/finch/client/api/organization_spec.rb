@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Finch::Client::API::Organization do
+RSpec.describe(Finch::Client::API::Organization) do
   before do
     Finch::Client.configure do |config|
       config.client_id = '12345'
@@ -19,7 +19,7 @@ RSpec.describe Finch::Client::API::Organization do
 
   describe '#directory' do
     it 'makes a GET request to the directory path' do
-      stub_request(:get, 'https://example.com/employer/directory')
+      stub_request(:get, 'https://example.com/employer/directory?limit=250&offset=0')
         .to_return(status: 200, body: { individuals: [] }.to_json)
 
       dummy_class.directory
@@ -33,14 +33,16 @@ RSpec.describe Finch::Client::API::Organization do
     end
 
     it 'returns an array of Resource objects for a namespaced collection' do
-      stub_request(:get, 'https://example.com/employer/directory')
+      stub_request(:get, 'https://example.com/employer/directory?limit=250&offset=0')
         .to_return(status: 200, body: { individuals: [{ name: 'Finch' }] }.to_json)
+      stub_request(:get, 'https://example.com/employer/directory?limit=250&offset=250')
+        .to_return(status: 200, body: { individuals: [] }.to_json)
 
       result = dummy_class.directory
 
-      expect(result).to be_a(Finch::Client::ResourceCollection)
-      expect(result.first).to be_a(Finch::Client::Resource)
-      expect(result.first.name).to eq('Finch')
+      expect(result).to(be_a(Finch::Client::ResourceCollection))
+      expect(result.first).to(be_a(Finch::Client::Resource))
+      expect(result.first.name).to(eq('Finch'))
     end
   end
 
@@ -68,9 +70,9 @@ RSpec.describe Finch::Client::API::Organization do
 
       result = dummy_class.individual({ individual_id: '1' })
 
-      expect(result).to be_a(Finch::Client::ResourceCollection)
-      expect(result.first).to be_a(Finch::Client::Resource)
-      expect(result.first.name).to eq('Finch')
+      expect(result).to(be_a(Finch::Client::ResourceCollection))
+      expect(result.first).to(be_a(Finch::Client::Resource))
+      expect(result.first.name).to(eq('Finch'))
     end
 
     it 'lets you specify multiple individual_ids' do
@@ -98,9 +100,9 @@ RSpec.describe Finch::Client::API::Organization do
 
       result = dummy_class.employment({ individual_id: '1' })
 
-      expect(result).to be_a(Finch::Client::ResourceCollection)
-      expect(result.first).to be_a(Finch::Client::Resource)
-      expect(result.first.name).to eq('Finch')
+      expect(result).to(be_a(Finch::Client::ResourceCollection))
+      expect(result.first).to(be_a(Finch::Client::Resource))
+      expect(result.first.name).to(eq('Finch'))
     end
 
     it 'lets you specify multiple individual_ids' do

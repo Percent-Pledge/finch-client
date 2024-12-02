@@ -8,6 +8,19 @@ Metrics/BlockLength:
   Exclude:
     - "spec/**/**.*"
 
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/AbcSize:
+  Max: 25
+
+Style/MethodCallWithArgsParentheses:
+  AllowParenthesesInChaining: false
+  Enabled: true
+
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+
 Style/Documentation:
   Enabled: false
 
@@ -26,3 +39,6 @@ RSpec/MultipleExpectations:
 RSpec/NoExpectationExample:
   AllowedPatterns:
     - stub_request
+
+RSpec/VerifiedDoubles:
+  IgnoreSymbolicNames: true
