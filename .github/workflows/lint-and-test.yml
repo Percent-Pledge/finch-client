@@ -10,7 +10,7 @@ on:
 
 jobs:
   run-linting:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     name: Run linting checks
 
@@ -22,13 +22,16 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Bundle install
+        run: bundle install
 
       - name: Run Ruby linting via Rubocop
         run: bundle exec rubocop
 
   run-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: "! contains(toJSON(github.event.commits.*.message), '[skip ci]')"
     strategy:
       matrix:
@@ -44,7 +47,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Bundle install
+        run: bundle install
 
       - name: Run tests
         run: bundle exec rspec
