@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Finch::Client::Resource do
+RSpec.describe(Finch::Client::Resource) do
   before do
     Finch::Client.configure do |config|
       config.client_id = '12345'
@@ -14,36 +14,36 @@ RSpec.describe Finch::Client::Resource do
       data = { 'name' => 'Finch', 'nested' => { 'id' => 1 } }
       resource = described_class.new(data)
 
-      expect(resource.data).to include({ name: 'Finch' })
-      expect(resource.data[:nested].data).to eq({ id: 1 })
+      expect(resource.data).to(include({ name: 'Finch' }))
+      expect(resource.data[:nested].data).to(eq({ id: 1 }))
     end
 
     it 'creates nested resources for hashes' do
       data = { 'nested' => { 'id' => 1 } }
       resource = described_class.new(data)
 
-      expect(resource.nested).to be_a(described_class)
+      expect(resource.nested).to(be_a(described_class))
     end
 
     it 'creates nested resources for arrays' do
       data = { 'nested' => [{ 'id' => 1 }, 'asdf'] }
       resource = described_class.new(data)
 
-      expect(resource.nested).to be_a(Array)
-      expect(resource.nested.first).to be_a(described_class)
-      expect(resource.nested.last).to be_a(String)
+      expect(resource.nested).to(be_a(Array))
+      expect(resource.nested.first).to(be_a(described_class))
+      expect(resource.nested.last).to(be_a(String))
     end
 
     it 'allows you to set headers' do
       resource = described_class.new({}, { 'X-Finch-Test' => 'test' })
 
-      expect(resource.headers['X-Finch-Test']).to eq('test')
+      expect(resource.headers['X-Finch-Test']).to(eq('test'))
     end
 
     it 'sets a default value for headers' do
       resource = described_class.new({})
 
-      expect(resource.headers).to be_nil
+      expect(resource.headers).to(be_nil)
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe Finch::Client::Resource do
       data = { 'name' => 'Finch', 'nested' => { 'id' => 1 } }
       resource = described_class.new(data)
 
-      expect(resource.to_h).to eq(data)
+      expect(resource.to_h).to(eq(data))
     end
   end
 
@@ -61,20 +61,20 @@ RSpec.describe Finch::Client::Resource do
       data = { 'name' => 'Finch' }
       resource = described_class.new(data)
 
-      expect(resource.name).to eq(data['name'])
+      expect(resource.name).to(eq(data['name']))
     end
 
     it 'delegates to the data attribute even if its value is false' do
       data = { 'is_active' => false }
       resource = described_class.new(data)
 
-      expect(resource.is_active).to eq(data['is_active'])
+      expect(resource.is_active).to(eq(data['is_active']))
     end
 
     it 'raises an error if the data attribute does not respond to the method' do
       resource = described_class.new({})
 
-      expect { resource.foo }.to raise_error(NoMethodError)
+      expect { resource.foo }.to(raise_error(NoMethodError))
     end
   end
 
@@ -83,13 +83,13 @@ RSpec.describe Finch::Client::Resource do
       data = { 'name' => 'Finch' }
       resource = described_class.new(data)
 
-      expect(resource.respond_to?(:name)).to be(true)
+      expect(resource.respond_to?(:name)).to(be(true))
     end
 
     it 'returns false if the data attribute does not respond to the method' do
       resource = described_class.new({})
 
-      expect(resource.respond_to?(:foo)).to be(false)
+      expect(resource.respond_to?(:foo)).to(be(false))
     end
   end
 end

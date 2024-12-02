@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Finch::Client::API::Payroll do
+RSpec.describe(Finch::Client::API::Payroll) do
   before do
     Finch::Client.configure do |config|
       config.client_id = '12345'
@@ -47,9 +47,9 @@ RSpec.describe Finch::Client::API::Payroll do
 
       result = dummy_class.pay_statement({})
 
-      expect(result).to be_a(Finch::Client::ResourceCollection)
-      expect(result.first).to be_a(Finch::Client::Resource)
-      expect(result.first.name).to eq('Finch')
+      expect(result).to(be_a(Finch::Client::ResourceCollection))
+      expect(result.first).to(be_a(Finch::Client::Resource))
+      expect(result.first.name).to(eq('Finch'))
     end
 
     it 'lets you specify which payments to look up' do

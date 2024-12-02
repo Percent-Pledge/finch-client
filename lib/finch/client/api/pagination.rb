@@ -76,7 +76,7 @@ module Finch
               sleep(sleep_time)
               retry
             else
-              raise e
+              raise(e)
             end
           end
         end

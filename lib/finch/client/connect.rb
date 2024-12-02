@@ -27,7 +27,7 @@ module Finch
           if response.success?
             response.parsed_response['access_token']
           else
-            raise AccessTokenError, response.parsed_response['message']
+            raise(AccessTokenError, response.parsed_response['message'])
           end
         end
 

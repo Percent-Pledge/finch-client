@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Finch::Client::API::Benefits do
+RSpec.describe(Finch::Client::API::Benefits) do
   before do
     Finch::Client.configure do |config|
       config.client_id = '12345'

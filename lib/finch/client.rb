@@ -14,7 +14,7 @@ module Finch
     class Error < StandardError; end
 
     def configure
-      yield configuration if block_given?
+      yield(configuration) if block_given?
     end
 
     def configuration

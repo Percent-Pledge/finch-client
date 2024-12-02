@@ -42,7 +42,7 @@ module Finch
             parse_response(response.parsed_response, response.headers, resource_key)
           else
             logger.error { "Finch API request failed. Context: #{logging_context}" }
-            raise APIError.new(response.parsed_response['message'], response)
+            raise(APIError.new(response.parsed_response['message'], response))
           end
         end
 
