@@ -7,8 +7,6 @@ require 'finch/client/resource'
 require 'finch/client/configuration'
 require 'finch/client/resource_collection'
 
-require 'finch/client/connect/sessions'
-
 module Finch
   module Client
     extend self

@@ -5,7 +5,7 @@ require 'httparty'
 
 module Finch
   module Client
-    module Connect
+    class Connect
       class Sessions
         class << self
           def create(params, finch_api_version: '2020-09-17')

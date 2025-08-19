@@ -3,6 +3,8 @@
 require 'base64'
 require 'httparty'
 
+require 'finch/client/connect/sessions'
+
 module Finch
   module Client
     class Connect
