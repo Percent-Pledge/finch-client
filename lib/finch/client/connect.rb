@@ -8,6 +8,8 @@ require 'finch/client/connect/sessions'
 module Finch
   module Client
     class Connect
+      include Sessions
+
       class AccessTokenError < StandardError; end
 
       class << self
