@@ -3,13 +3,9 @@
 require 'base64'
 require 'httparty'
 
-require 'finch/client/connect/sessions'
-
 module Finch
   module Client
     class Connect
-      include Sessions
-
       class AccessTokenError < StandardError; end
 
       class << self
@@ -36,6 +32,18 @@ module Finch
           else
             raise(AccessTokenError, response.parsed_response['message'])
           end
+        end
+
+        def create_session(params, finch_api_version: '2020-09-17')
+          HTTParty.post(
+            'https://api.tryfinch.com/connect/sessions',
+            headers: {
+              'Authorization' => authorization_header,
+              'Content-Type' => 'application/json',
+              'Finch-API-Version' => finch_api_version
+            },
+            body: params.to_json
+          )
         end
 
         private
