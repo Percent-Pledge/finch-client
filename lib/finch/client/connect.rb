@@ -3,12 +3,16 @@
 require 'base64'
 require 'httparty'
 
+require 'finch/client/connect/sessions'
+
 module Finch
   module Client
     class Connect
       class AccessTokenError < StandardError; end
 
       class << self
+        include Finch::Client::Helpers
+
         def authorization_uri(redirect_uri, products, optional_params = {})
           URI::HTTPS.build(
             host: 'connect.tryfinch.com',
@@ -25,10 +29,7 @@ module Finch
           response = do_request_access_token(redirect_uri, code)
 
           if response.success?
-            {
-              access_token: response.parsed_response['access_token'],
-              connection_id: response.parsed_response['connection_id']
-            }
+            deep_symbolize_keys(response.parsed_response)
           else
             raise(AccessTokenError, response.parsed_response['message'])
           end

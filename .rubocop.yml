@@ -27,6 +27,9 @@ Style/Documentation:
 Style/GuardClause:
   Enabled: false
 
+Style/MultilineBlockChain:
+  Enabled: false
+
 Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 

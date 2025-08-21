@@ -47,18 +47,20 @@ RSpec.describe(Finch::Client::Connect) do
       described_class.request_access_token('example.com', '12345')
     end
 
-    it 'returns the access token' do
+    it 'returns the access response' do
+      response = {
+        access_token: 'abcdef',
+        connection_id: '12345'
+      }
+
       stub_request(:post, 'https://api.tryfinch.com/auth/token')
-        .to_return(headers: { content_type: 'application/json' }, body: { access_token: 'abcdef' }.to_json)
+        .to_return(headers: { content_type: 'application/json' }, body: response.to_json)
 
-      expect(described_class.request_access_token('example.com', '12345')[:access_token]).to(eq('abcdef'))
-    end
+      result = described_class.request_access_token('example.com', '54321')
 
-    it 'returns the connection id' do
-      stub_request(:post, 'https://api.tryfinch.com/auth/token')
-        .to_return(headers: { content_type: 'application/json' }, body: { connection_id: '12345' }.to_json)
-
-      expect(described_class.request_access_token('example.com', '12345')[:connection_id]).to(eq('12345'))
+      expect(result).to(be_a(Hash))
+      expect(result[:access_token]).to(eq('abcdef'))
+      expect(result[:connection_id]).to(eq('12345'))
     end
 
     it 'throws if request was unsuccessful' do

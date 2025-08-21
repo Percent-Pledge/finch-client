@@ -39,4 +39,16 @@ RSpec.describe(Finch::Client::Configuration) do
       expect(described_class.new.sandbox).to(be(false))
     end
   end
+
+  describe '#webhook_secret' do
+    it 'returns the webhook secret' do
+      config = described_class.new
+      config.webhook_secret = 'whsec_abcdef'
+      expect(config.webhook_secret).to(eq('whsec_abcdef'))
+    end
+
+    it 'returns nil if webhook secret is not set' do
+      expect(described_class.new.webhook_secret).to(be_nil)
+    end
+  end
 end

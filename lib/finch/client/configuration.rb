@@ -3,6 +3,7 @@
 module Finch
   module Client
     class Configuration
+      attr_accessor :webhook_secret
       attr_writer :client_id, :client_secret, :sandbox, :logger
 
       def client_id
