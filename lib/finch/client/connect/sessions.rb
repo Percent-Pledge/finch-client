@@ -20,8 +20,6 @@ module Finch
           end
         end
 
-        # TODO: test
-
         class << self
           def create(params, finch_api_version: '2020-09-17')
             do_create_session(params, finch_api_version)
