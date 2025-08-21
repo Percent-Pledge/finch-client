@@ -11,6 +11,8 @@ module Finch
       class AccessTokenError < StandardError; end
 
       class << self
+        include Finch::Client::Helpers
+
         def authorization_uri(redirect_uri, products, optional_params = {})
           URI::HTTPS.build(
             host: 'connect.tryfinch.com',
@@ -27,8 +29,7 @@ module Finch
           response = do_request_access_token(redirect_uri, code)
 
           if response.success?
-            # TODO: test
-            response.parsed_response
+            deep_symbolize_keys(response.parsed_response)
           else
             raise(AccessTokenError, response.parsed_response['message'])
           end

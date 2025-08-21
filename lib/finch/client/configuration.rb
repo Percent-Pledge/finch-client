@@ -3,6 +3,7 @@
 module Finch
   module Client
     class Configuration
+      attr_accessor :webhook_secret
       attr_writer :client_id, :client_secret, :sandbox, :logger
 
       def client_id
@@ -12,9 +13,6 @@ module Finch
       def client_secret
         @client_secret || raise(ArgumentError, 'Finch client_secret must be set')
       end
-
-      # TODO: test
-      attr_accessor :webhook_secret
 
       def sandbox
         @sandbox ||= false
